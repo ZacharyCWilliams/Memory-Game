@@ -71,6 +71,8 @@ var cardValues = []; //remember card values
 var cardIds = []; //Empty list we can fill with dynamic card ids
 var tilesFlipped = 0;
 
+
+
 // loop through cardList and create HTML array
 function cardListHTML(cardList){
   var listHTML = '';
@@ -93,11 +95,14 @@ $('.deck').html(cardListHTML(cardList));
 //function restarts game
 const restartGame =
   $('.score-panel > .restart').click(function(){
-  $('.deck').html(cardListHTML(cardList));
+  var shuffledCardList = shuffle(cardList);
+  $('.deck').html(cardListHTML(shuffledCardList));
   $('.deck > .card').click(function() {
-    $(this).toggleClass( ".card show open" )
+    $(this).toggleClass( ".card show open" );
   });
   });
+
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -110,15 +115,45 @@ function shuffle(array) {
         array[randomIndex] = temporaryValue;
     }
 
-    //return array;
-    var shuffledCardList = shuffle(cardList); //shuffles cardList
-    return shuffledCardList;
+    return array;
+  //var shuffledCardList = shuffle(cardList); //shuffles cardList
+  //return shuffledCardList;
 }
+//shuffles
+/*$('.score-panel > .restart').click(function(){
+  var shuffledCardList = shuffle(cardList);
+  cardListHTML(shuffledCardList);
+}); */
+
 
 $('.deck > .card').click(function() {
   $(this).toggleClass( ".card show open" )
 });
 //console.log(openCardList);
+
+/* const gameState = {
+  currentlyOpenCards: [],
+  numberOfGuessesLeft: 3,
+  correctlyGuessedCards: []
+};
+
+*/
+
+//$('.card').click(function() {
+  //gameState.currentlyOpenCards.push($(this));
+  //}
+  //if gameState.currentlyOpenCards !== 0{
+  //
+//}
+ //});
+// all this happens in same click function
+ // get index of clicked card using data attribute
+ // if there is already a card opened, and cards match, keep both open and reset currentlyOpenedCards list & add them to correctly guessed cards
+ //if theres not already a currently opened card, find index using data attribute & add it to currently opened cards
+ //if you click and dont match, remove from currently opened card list and toggle class to closed
+ //if all cards are open, open modal
+
+
 
 
 /*
@@ -132,11 +167,39 @@ $('.deck > .card').click(function() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-/*$('.restart').click(function(){    var shuffledCardList = shuffle(cardList); //shuffles cardList
+/*$('.restart').click(function(){
   var shuffledCardList = shuffle(cardList); //shuffles cardList
   return shuffledCardList;
 });
 */
+
+let open = [];
+let match = [];
+
+$('.card').click(function() {
+   if (open.length < 2){
+		open.push($(this));
+   if (open.length == 2){
+	a = open[0].find('i');
+	b = open[1].find('i');
+		if (a === b){
+			$(open[0]).removeClass('open show').addClass('card match');
+            $(open[1]).removeClass('open show').addClass('card match');
+            match.push(open[0]);
+            match.push(open[1]);
+            open = [];
+        } else if (a !== b){
+			$(open[0]).removeClass('open show').addClass('card');
+			$(open[1]).removeClass('open show').addClass('card');
+			open = [];
+		}
+        }
+}
+});
+
+
+
+
 
 
 
@@ -148,6 +211,10 @@ const match = [];
 
 $('.card').click(function() {
    open.push($(this));
+   for (i = 0; i < open.length; i++){
+     if (open[0] == open[1]){
+       match.push(open[0] && open[1]);
+     }
+   }
  });
-
 */
