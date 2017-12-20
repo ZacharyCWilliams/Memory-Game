@@ -167,41 +167,41 @@ $('.deck > .card').click(function() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-/*$('.restart').click(function(){
-  var shuffledCardList = shuffle(cardList); //shuffles cardList
-  return shuffledCardList;
-});
-*/
+//open cards and matched cards lists
 
 let open = [];
 let match = [];
 
-$('.card').click(function() {
-   if (open.length < 2){
+$('.card').click(function() { //on click
+   if (open.length < 2){ // add card to open card list if list has less than 2 cards
 		open.push($(this));
-   if (open.length == 2){
-	a = open[0].find('i');
-	b = open[1].find('i');
-		if (a === b){
-			$(open[0]).removeClass('open show').addClass('card match');
-            $(open[1]).removeClass('open show').addClass('card match');
-            match.push(open[0]);
-            match.push(open[1]);
-            open = [];
+   if (open.length == 2){ // if there are two cards open find favicon images of both
+	let a = open[0].find('i');
+  let i = a.prevObject["0"].firstChild.className;
+	let b = open[1].find('i');
+  let z = b.prevObject["0"].firstChild.className;
+		if (z === i){ // compare favicon images! If they match, switch their classes to card match and then lock them into place
+        open[0].addClass('card match');
+        open[1].addClass('card match');
+        match.push(open[0]);
+        match.push(open[1]);
+        open = [];
         } else if (a !== b){
-			$(open[0]).removeClass('open show').addClass('card');
-			$(open[1]).removeClass('open show').addClass('card');
-			open = [];
-		}
+        let flipCard =  function(){
+          $(open[0]).removeClass('open show').addClass('card');
+          $(open[1]).removeClass('open show').addClass('card');
+          open = [];
         }
+        setTimeout(flipCard, 1500);
+        }
+      }
 }
 });
 
 
-
-
-
-
+if (match.length === 16){
+  modal.popup
+}
 
 /*
 creates object out of instance of class card clicked and then pushes object into open list
