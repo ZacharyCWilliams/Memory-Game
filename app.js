@@ -67,12 +67,6 @@ var cardList = [ {
 }
 ];
 
-var cardValues = []; //remember card values
-var cardIds = []; //Empty list we can fill with dynamic card ids
-var tilesFlipped = 0;
-
-
-
 // loop through cardList and create HTML array
 function cardListHTML(cardList){
   var listHTML = '';
@@ -81,25 +75,25 @@ function cardListHTML(cardList){
 }
   return listHTML;
 }
-//console.log(cardListHTML(cardList));
 //add html card list to html deck
 $('.deck').html(cardListHTML(cardList));
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-// loop through cards & create HTML
 
 //function restarts game
-const restartGame =
+let restartGame =
   $('.score-panel > .restart').click(function(){
   var shuffledCardList = shuffle(cardList);
   $('.deck').html(cardListHTML(shuffledCardList));
+  moves = 0;
+  clock = 0;
+  counter();
+  match = [];
+  $('.moves').html('' + moves);
+  $('.stars').children().show()
+  setTimeout(counterAndStars, 250);
   $('.deck > .card').click(function() {
     $(this).toggleClass( ".card show open" );
   });
+  gameFunctionality();
   });
 
 
@@ -116,61 +110,43 @@ function shuffle(array) {
     }
 
     return array;
-  //var shuffledCardList = shuffle(cardList); //shuffles cardList
-  //return shuffledCardList;
 }
-//shuffles
-/*$('.score-panel > .restart').click(function(){
-  var shuffledCardList = shuffle(cardList);
-  cardListHTML(shuffledCardList);
-}); */
 
+//make card flip open on click
 
 $('.deck > .card').click(function() {
+  $(this).addClass('animated flip');
   $(this).toggleClass( ".card show open" )
 });
-//console.log(openCardList);
 
-/* const gameState = {
-  currentlyOpenCards: [],
-  numberOfGuessesLeft: 3,
-  correctlyGuessedCards: []
+//Moves counter & star rating
+let moves = 0;
+
+
+let counterAndStars = function() {
+
+$('.deck > .card').click(function() {
+  moves++;
+  $('.moves').html('' + moves);
+  if (moves <= 20){
+    $('.stars').children().show();
+  } else if (moves === 21){
+    $('.stars li:first').hide('li');
+  } else if (moves === 31){
+    $('.stars li:eq(1)').hide('li');
+  } else if (moves === 40){
+    $('.stars li:eq(2)').hide('li');
+  }
+});
 };
-
-*/
-
-//$('.card').click(function() {
-  //gameState.currentlyOpenCards.push($(this));
-  //}
-  //if gameState.currentlyOpenCards !== 0{
-  //
-//}
- //});
-// all this happens in same click function
- // get index of clicked card using data attribute
- // if there is already a card opened, and cards match, keep both open and reset currentlyOpenedCards list & add them to correctly guessed cards
- //if theres not already a currently opened card, find index using data attribute & add it to currently opened cards
- //if you click and dont match, remove from currently opened card list and toggle class to closed
- //if all cards are open, open modal
-
-
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+counterAndStars();
 
 //open cards and matched cards lists
 
 let open = [];
 let match = [];
+
+let gameFunctionality = function(){
 
 $('.card').click(function() { //on click
    if (open.length < 2){ // add card to open card list if list has less than 2 cards
@@ -181,40 +157,102 @@ $('.card').click(function() { //on click
 	let b = open[1].find('i');
   let z = b.prevObject["0"].firstChild.className;
 		if (z === i){ // compare favicon images! If they match, switch their classes to card match and then lock them into place
+        open[0].removeClass('animated flip').addClass('bounce');
+        open[1].removeClass('animated flip').addClass('bounce');
         open[0].addClass('card match');
         open[1].addClass('card match');
-        match.push(open[0]);
+        match.push(open[0]); // push cards into the match list & clear open list
         match.push(open[1]);
         open = [];
         } else if (a !== b){
+          open[0].removeClass('open show').removeClass('animated flip').addClass('card redBackground').addClass('shake');
+          open[1].removeClass('open show').removeClass('animated flip').addClass('card redBackground').addClass('shake');
         let flipCard =  function(){
-          $(open[0]).removeClass('open show').addClass('card');
-          $(open[1]).removeClass('open show').addClass('card');
+          $(open[0]).removeClass('shake').removeClass('card redBackground').addClass('card');
+          $(open[1]).removeClass('shake').removeClass('card redBackground').addClass('card');
           open = [];
         }
         setTimeout(flipCard, 1500);
         }
       }
 }
+const congrats = function() {
+  if (match.length === 16){
+    modalPopupNow();
+}
+};
+setTimeout(congrats, 1500);
 });
+};
+gameFunctionality();
 
+//function expression for counter
+let clock = 0;
+const counter = function(){
+let timer = $('#timer');
+timer.html(convertSecond(clock));
 
-if (match.length === 16){
-  modal.popup
+function convertSecond(s){
+  let min = Math.floor(s/60);
+  let sec = s % 60;
+  return min + ':' + sec;
 }
 
-/*
-creates object out of instance of class card clicked and then pushes object into open list
 
-let open = [];
-const match = [];
+function timeIt(){
+  if (match.length < 16){
+      clock++;
+  }
+  timer.html(convertSecond(clock));
+}
+let interval = setInterval(timeIt, 1000);
+if (match.length == 16){
+  clearInterval(interval);
+}
+};
+counter();
 
-$('.card').click(function() {
-   open.push($(this));
-   for (i = 0; i < open.length; i++){
-     if (open[0] == open[1]){
-       match.push(open[0] && open[1]);
-     }
-   }
- });
-*/
+
+//function expression for modal popup
+let modalPopupNow = function () {
+  //set congratsText
+  let congratsText = ('Congratulations! You won!')
+  //Get modalText
+  let modalText = $('#modalText');
+  //set modalText to congratsText
+  modalText.html(congratsText);
+
+  // sets congrats paragraph
+  let congratsparagraph = ('With ' + moves + ' moves in ' + clock + ' seconds!');
+  //select modalTextTwo id
+  let modalTextTwo = $('#modalTextTwo');
+  //make congrats paragraph modalTextTwo's html
+  modalTextTwo.html(congratsparagraph);
+
+  //get playAgain button
+
+  let modalBtn = $('#playAgain')
+
+  modalBtn.click(function () {
+    $('#popupModal').css({'display':'none'});
+    restartFunctionality();
+  })
+  $('#popupModal').css({'display':'block'});
+}
+
+//putting restartGame functionality here so i can use for popup
+let restartFunctionality = function () {
+  var shuffledCardList = shuffle(cardList);
+  $('.deck').html(cardListHTML(shuffledCardList));
+  moves = 0;
+  clock = 0;
+  counter();
+  match = [];
+  $('.moves').html('' + moves);
+  $('.stars').children().show()
+  setTimeout(counterAndStars, 250);
+  $('.deck > .card').click(function() {
+    $(this).toggleClass( ".card show open" );
+  });
+  gameFunctionality();
+};
