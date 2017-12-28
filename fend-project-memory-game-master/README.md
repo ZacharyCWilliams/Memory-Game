@@ -6,7 +6,7 @@ Try to match two cards. If they match, they stay open. If they don't, they close
 
 In order to run this game paste the following URL into your browser:
 
-https://cdn.rawgit.com/ZacharyCWilliams/Memory-Game/e42de5c5/fend-project-memory-game-master/index.html
+`https://cdn.rawgit.com/ZacharyCWilliams/Memory-Game/e42de5c5/fend-project-memory-game-master/index.html`
 
 ##Gameplay & Functionality
 
