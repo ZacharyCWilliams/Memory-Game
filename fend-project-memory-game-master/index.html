@@ -18,13 +18,18 @@
         </header>
 
         <section class="score-panel">
-        	<ul class="stars">
+
+          <ul class="stars">
         		<li><i class="fa fa-star"></i></li>
         		<li><i class="fa fa-star"></i></li>
         		<li><i class="fa fa-star"></i></li>
         	</ul>
 
         	<span class="moves">0</span> Moves
+
+          <div id='countdownTimer'>
+            <p id ='timer'>0:0</p>
+          </div>
 
             <div class="restart">
         		<i class="fa fa-repeat"></i>
@@ -82,9 +87,6 @@
             </li>
         </ul>
     </div>
-      <div id='countdownTimer'>
-        <p id ='timer'>0</p>
-      </div>
       <div id=popupModal>
         <div id=popupContent>
         <p id=modalText>Congrats! You Win!</p>

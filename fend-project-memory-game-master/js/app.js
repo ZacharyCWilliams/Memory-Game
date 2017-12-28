@@ -132,10 +132,8 @@ $('.deck > .card').click(function() {
     $('.stars').children().show();
   } else if (moves === 21){
     $('.stars li:first').hide('li');
-  } else if (moves === 31){
-    $('.stars li:eq(1)').hide('li');
   } else if (moves === 40){
-    $('.stars li:eq(2)').hide('li');
+    $('.stars li:eq(1)').hide('li');
   }
 });
 };
@@ -200,7 +198,7 @@ function convertSecond(s){
 
 
 function timeIt(){
-  if (match.length < 16){
+  if (moves > 0 && match.length < 16){
       clock++;
   }
   timer.html(convertSecond(clock));
@@ -213,6 +211,7 @@ if (match.length == 16){
 counter();
 
 
+
 //function expression for modal popup
 let modalPopupNow = function () {
   //set congratsText
@@ -222,8 +221,17 @@ let modalPopupNow = function () {
   //set modalText to congratsText
   modalText.html(congratsText);
 
+  //stars conditional
+  if (moves <= 20){
+    starParagraph = 3;
+  } else if (moves > 20 && moves < 40){
+    starParagraph = 2;
+  } else if (moves === 40){
+    starParagraph = 1;
+  }
+
   // sets congrats paragraph
-  let congratsparagraph = ('With ' + moves + ' moves in ' + clock + ' seconds!');
+  let congratsparagraph = ('With ' + moves + ' moves and ' + starParagraph + ' stars in '+ clock + ' seconds!');
   //select modalTextTwo id
   let modalTextTwo = $('#modalTextTwo');
   //make congrats paragraph modalTextTwo's html
