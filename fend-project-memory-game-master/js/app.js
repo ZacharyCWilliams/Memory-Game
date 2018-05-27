@@ -1,7 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
-var cardList = [ {
+let cardList = [ {
   name: "Diamond",
   img: '<i class="fa fa-diamond"></i>',
 },
