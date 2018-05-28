@@ -68,9 +68,9 @@ let cardList = [ {
 ];
 
 // loop through cardList and create HTML array
-function cardListHTML(cardList){
-  var listHTML = '';
-  for(var i = cardList.length - 1; i >=0; i--){
+const cardListHTML = (cardList) => {
+  let listHTML = '';
+  for (let i = cardList.length - 1; i >=0; i--) {
     listHTML += '<li class="card">' + cardList[i].img + '</li>';
 }
   return listHTML;
