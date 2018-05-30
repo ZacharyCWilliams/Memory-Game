@@ -144,7 +144,7 @@ counterAndStars();
 let open = [];
 let match = [];
 
-let gameFunctionality = function(){
+let gameFunctionality = () => {
 
 $('.card').click(function() { //on click
    if (open.length < 2){ // add card to open card list if list has less than 2 cards
