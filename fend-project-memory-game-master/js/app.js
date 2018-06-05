@@ -249,7 +249,7 @@ let modalPopupNow = function () {
 }
 
 //putting restartGame functionality here so i can use for popup
-let restartFunctionality = function () {
+const restartFunctionality = () => {
   var shuffledCardList = shuffle(cardList);
   $('.deck').html(cardListHTML(shuffledCardList));
   moves = 0;
