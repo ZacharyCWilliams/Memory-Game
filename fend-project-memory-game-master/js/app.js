@@ -88,7 +88,7 @@ let restartGame =
   counter();
   match = [];
   $('.moves').html('' + moves);
-  $('.stars').children().show()
+  $('.stars').children().show();
   setTimeout(counterAndStars, 250);
   $('.deck > .card').click(function() {
     $(this).toggleClass( ".card show open" );
