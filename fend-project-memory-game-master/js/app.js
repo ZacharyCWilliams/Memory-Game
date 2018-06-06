@@ -81,7 +81,7 @@ $('.deck').html(cardListHTML(cardList));
 //function restarts game
 let restartGame =
   $('.score-panel > .restart').click(function(){
-  var shuffledCardList = shuffle(cardList);
+  let shuffledCardList = shuffle(cardList);
   $('.deck').html(cardListHTML(shuffledCardList));
   moves = 0;
   clock = 0;
