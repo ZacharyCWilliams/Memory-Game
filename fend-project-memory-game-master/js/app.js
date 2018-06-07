@@ -212,7 +212,7 @@ counter();
 
 //function expression for modal popup
 
-let modalPopupNow = function () {
+let modalPopupNow = () => {
   //set congratsText
   let congratsText = ('Congratulations! You won!')
   //Get modalText
