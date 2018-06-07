@@ -1,6 +1,5 @@
-/*
- * Create a list that holds all of your cards
- */
+// Create a list that holds all of your cards
+
 let cardList = [ {
   name: "Diamond",
   img: '<i class="fa fa-diamond"></i>',
@@ -68,6 +67,7 @@ let cardList = [ {
 ];
 
 // loop through cardList and create HTML array
+
 const cardListHTML = (cardList) => {
   let listHTML = '';
   for (let i = cardList.length - 1; i >=0; i--) {
@@ -75,10 +75,13 @@ const cardListHTML = (cardList) => {
 }
   return listHTML;
 }
+
 //add html card list to html deck
+
 $('.deck').html(cardListHTML(cardList));
 
 //function restarts game
+
 let restartGame =
   $('.score-panel > .restart').click(function(){
   let shuffledCardList = shuffle(cardList);
@@ -96,8 +99,8 @@ let restartGame =
   gameFunctionality();
   });
 
-
 // Shuffle function from http://stackoverflow.com/a/2450976
+
 const shuffle = (array) => {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -108,7 +111,6 @@ const shuffle = (array) => {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
@@ -120,11 +122,10 @@ $('.deck > .card').click(function() {
 });
 
 //Moves counter & star rating
+
 let moves = 0;
 
-
 let counterAndStars = function() {
-
 $('.deck > .card').click(function() {
   moves++;
   $('.moves').html('' + moves);
@@ -145,7 +146,6 @@ let open = [];
 let match = [];
 
 let gameFunctionality = () => {
-
 $('.card').click(function() { //on click
    if (open.length < 2){ // add card to open card list if list has less than 2 cards
 		open.push($(this));
@@ -185,6 +185,7 @@ setTimeout(congrats, 1500);
 gameFunctionality();
 
 //function expression for counter
+
 let clock = 0;
 const counter = function(){
 let timer = $('#timer');
@@ -195,7 +196,6 @@ function convertSecond(s){
   let sec = s % 60;
   return min + ':' + sec;
 }
-
 
 function timeIt(){
   if (moves > 0 && match.length < 16){
@@ -210,9 +210,8 @@ if (match.length == 16){
 };
 counter();
 
-
-
 //function expression for modal popup
+
 let modalPopupNow = function () {
   //set congratsText
   let congratsText = ('Congratulations! You won!')
@@ -222,6 +221,7 @@ let modalPopupNow = function () {
   modalText.html(congratsText);
 
   //stars conditional
+	
   if (moves <= 20){
     starParagraph = 3;
   } else if (moves > 20 && moves < 40){
@@ -231,10 +231,15 @@ let modalPopupNow = function () {
   }
 
   // sets congrats paragraph
+	
   let congratsparagraph = ('With ' + moves + ' moves and ' + starParagraph + ' stars in '+ clock + ' seconds!');
+  
   //select modalTextTwo id
+	
   let modalTextTwo = $('#modalTextTwo');
+	
   //make congrats paragraph modalTextTwo's html
+	
   modalTextTwo.html(congratsparagraph);
 
   //get playAgain button
@@ -249,6 +254,7 @@ let modalPopupNow = function () {
 }
 
 //putting restartGame functionality here so i can use for popup
+
 const restartFunctionality = () => {
   const shuffledCardList = shuffle(cardList);
   $('.deck').html(cardListHTML(shuffledCardList));
