@@ -125,7 +125,7 @@ $('.deck > .card').click(function() {
 
 let moves = 0;
 
-let counterAndStars = function() {
+let counterAndStars = () => {
 $('.deck > .card').click(function() {
   moves++;
   $('.moves').html('' + moves);
